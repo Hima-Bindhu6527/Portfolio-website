@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Art — BK Hima Bindhu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-grad: #0E1B14;
+    --surface: #16261C;
+    --surface-2: #1C2F22;
+    --line: #2E4433;
+    --text: #F5F3EC;
+    --muted: #9FB09E;
+    --accent: #D4AF37;
+    --accent-dim: rgba(212,175,55,0.16);
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg-grad);
+    background-attachment:fixed;
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{
+    background:var(--accent);
+    color:#0A0810;
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+
+  .mono{
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:0.02em;
+  }
+
+  a{ color:inherit; text-decoration:none; cursor:pointer; }
+
+  .wrap{
+    max-width:1360px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+
+  /* NAV */
+  nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(9,9,15,0.75);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1360px;
+    margin:0 auto;
+    padding:20px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .nav-name{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:16px;
+  }
+  .nav-links{
+    display:flex;
+    gap:36px;
+  }
+  .nav-links a{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--muted);
+    transition:color 0.25s ease;
+    position:relative;
+  }
+  .nav-links a:hover{ color:var(--accent); }
+  .nav-links a.current{ color:var(--accent); }
+  .nav-links a::after{
+    content:'';
+    position:absolute;
+    left:0; bottom:-4px;
+    width:0; height:1px;
+    background:var(--accent);
+    transition:width 0.25s ease;
+  }
+  .nav-links a:hover::after{ width:100%; }
+
+  /* HERO */
+  .hero{
+    padding:100px 0 80px;
+    border-top:none;
+  }
+  .hero-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--accent);
+    margin-bottom:26px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .hero-eyebrow .dot{
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--accent);
+    display:inline-block;
+    box-shadow:0 0 8px var(--accent);
+  }
+  .hero h1{
+    font-size:44px;
+    line-height:1.2;
+    max-width:760px;
+    margin-bottom:22px;
+  }
+  .hero h1 .hl{ color:var(--accent); font-style:italic; }
+  .hero p{
+    font-size:16px;
+    color:var(--muted);
+    max-width:600px;
+  }
+
+  .back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--muted);
+    margin-top:32px;
+  }
+  .back-link:hover{ color:var(--accent); }
+
+  /* SECTION HEADERS */
+  section{ padding:80px 0; border-top:1px solid var(--line); }
+  .sec-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom:40px;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .sec-head h2{ font-size:26px; }
+  .sec-head .sec-note{
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--muted);
+  }
+
+  /* ART GRID */
+  .art-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+  }
+  .art-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition:border-color 0.25s ease, transform 0.25s ease;
+  }
+  .art-card:hover{
+    border-color:var(--accent);
+    transform:translateY(-3px);
+  }
+  .art-card .art-image{
+    width:100%;
+    aspect-ratio:4/5;
+    background:var(--surface-2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .art-card .art-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    filter:grayscale(0%);
+  }
+  .art-card .art-image .placeholder{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    text-align:center;
+    padding:20px;
+  }
+  .art-card .art-body{
+    padding:22px 24px 26px;
+  }
+  .art-card h3{
+    font-size:17px;
+    margin-bottom:8px;
+    transition:color 0.25s ease;
+  }
+  .art-card:hover h3{ color:var(--accent); }
+  .art-card p{
+    color:var(--muted);
+    font-size:13.5px;
+  }
+
+  footer{
+    padding:36px 0 44px;
+    border-top:1px solid var(--line);
+  }
+  footer p{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+  }
+
+  @media (max-width:1100px){
+    .art-grid{ grid-template-columns:repeat(2, 1fr); }
+  }
+
+  @media (max-width:680px){
+    .wrap{ padding:0 20px; }
+    .nav-inner{ padding:16px 20px; }
+    .hero h1{ font-size:30px; }
+    .art-grid{ grid-template-columns:1fr; }
+    .nav-links{ gap:18px; }
+  }
+
+  a:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-name">BK Hima Bindhu</span>
+    <div class="nav-links">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#about">About</a>
+      <a href="art.html" class="current">Art</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow"><span class="dot"></span>Pencil &amp; Mandala Work</div>
+    <h1>Away from the terminal, I draw in <span class="hl">graphite and geometry</span>.</h1>
+    <p>A collection of pencil sketches and mandala work — mostly black and white, built one line at a time the same way I debug: slowly, and with attention to what's actually there.</p>
+    <a class="back-link" href="index.html">← Back to portfolio</a>
+  </section>
+
+  <!-- MANDALA WORK -->
+  <section id="mandala">
+    <div class="sec-head">
+      <h2>Mandala Work</h2>
+      <span class="sec-note">Pattern &amp; symmetry</span>
+    </div>
+
+    <div class="art-grid">
+      <!--
+        REPLACE EACH art-image block below with:
+        <img src="images/art/mandala-1.jpg" alt="Short description of the piece">
+        Suggested order: open with your most detailed/striking mandala,
+        alternate dense <-> minimal pieces, close on another strong one.
+      -->
+      <div class="art-card reveal">
+  <div class="art-image"><img src="images/art/mandala-1.jfif" alt="Brief description of the piece"></div>
+  <div class="art-body">
+    <h3>Piece title</h3>
+    <p>2-3 sentence description — medium, what drew you to the pattern, anything about the process.</p>
+  </div>
+</div>
+
+<div class="art-card reveal">
+  <div class="art-image"><img src="images/art/mandala-2.jfif" alt="Brief description of the piece"></div>
+  <div class="art-body">
+    <h3>Piece title</h3>
+    <p>2-3 sentence description — medium, what drew you to the pattern, anything about the process.</p>
+  </div>
+</div>
+
+<div class="art-card reveal">
+  <div class="art-image"><img src="images/art/mandala-3.jfif" alt="Brief description of the piece"></div>
+  <div class="art-body">
+    <h3>Piece title</h3>
+    <p>2-3 sentence description — medium, what drew you to the pattern, anything about the process.</p>
+  </div>
+</div>
+
+<div class="art-card reveal">
+  <div class="art-image"><img src="images/art/mandala-4.jfif" alt="Brief description of the piece"></div>
+  <div class="art-body">
+    <h3>Piece title</h3>
+    <p>2-3 sentence description — medium, what drew you to the pattern, anything about the process.</p>
+  </div>
+</div>
+    
+  </section>
+
+  <!-- PENCIL SKETCHES -->
+  <section id="sketches">
+    <div class="sec-head">
+      <h2>Pencil Sketches</h2>
+      <span class="sec-note">Shade &amp; form</span>
+    </div>
+
+    <div class="art-grid">
+      <!--
+        Same rule: replace with <img src="images/art/sketch-1.jpg" alt="...">
+        Order by tonal contrast/detail the same way — strong open, vary the middle, strong close.
+      -->
+      <div class="art-card reveal">
+  <div class="art-image"><img src="images/art/sketch-1.jfif" alt="Brief description of the piece"></div>
+        <div class="art-body">
+          <h3>Piece title</h3>
+          <p>2-3 sentence description — subject, medium, what you were going for.</p>
+        </div>
+      </div>
+
+      <div class="art-card reveal">
+  <div class="art-image"><img src="images/art/sketch-2.jfif" alt="Brief description of the piece"></div>
+        <div class="art-body">
+          <h3>Piece title</h3>
+          <p>2-3 sentence description — subject, medium, what you were going for.</p>
+        </div>
+      </div>
+
+      <div class="art-card reveal">
+  <div class="art-image"><img src="images/art/sketch-3.jfif" alt="Brief description of the piece"></div>
+        <div class="art-body">
+          <h3>Piece title</h3>
+          <p>2-3 sentence description — subject, medium, what you were going for.</p>
+        </div>
+      </div>
+
+      <div class="art-card reveal">
+  <div class="art-image"><img src="images/art/sketch-4.jfif" alt="Brief description of the piece"></div>
+        <div class="art-body">
+          <h3>Piece title</h3>
+          <p>2-3 sentence description — subject, medium, what you were going for.</p>
+        </div>
+      </div>
+
+      <div class="art-card reveal">
+  <div class="art-image"><img src="images/art/sketch-5.jfif" alt="Brief description of the piece"></div>
+        <div class="art-body">
+          <h3>Piece title</h3>
+          <p>2-3 sentence description — subject, medium, what you were going for.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 BK Hima Bindhu</p>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
